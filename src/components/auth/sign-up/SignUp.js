@@ -35,27 +35,35 @@ import CustomModal from "../../modal";
 import AcceptTermsAndConditions from "../AcceptTermsAndConditions";
 import OtpForm from "./OtpForm";
 import SignUpValidation from "./SignUpValidation";
+import { getLoginUserCheck } from "components/auth/sign-in/loginHepler";
+import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
 
-const SignUp = ({ configData }) => {
+const SignUp = ({
+  configData,
+  setModalFor,
+  sendOTP,
+  handleClose,
+  loginMutation,
+}) => {
   const router = useRouter();
+  const dispatch = useDispatch();
   //const { configData } = useSelector((state) => state.configData);
   const { profileInfo } = useSelector((state) => state.profileInfo);
   const [openModuleSelection, setOpenModuleSelection] = useState(false);
   const theme = useTheme();
-  const [otpData, setOtpData] = useState({ phone: "" });
+  const [otpData, setOtpData] = useState({ type: "" });
   const [mainToken, setMainToken] = useState(null);
   const [openOtpModal, setOpenOtpModal] = useState(false);
   //const [welcomeModal, setWelcomeModal] = useState(false);
   const [selectedModule, setSelectedModule] = useState(null);
   const [verificationId, setVerificationId] = useState(null);
+  const [loginValue, setLoginValue] = useState(null);
   const guestId = getGuestId();
   // const { sendOTP, verificationId, isOtpSent } = useFirebasePhoneAuth();
-  const { mutate: fireBaseOtpMutation, isLoading: fireIsLoading } =
-    useFireBaseOtpVerify();
+
   const signUpFormik = useFormik({
     initialValues: {
-      f_name: "",
-      l_name: "",
+      name: "",
       email: "",
       phone: "",
       password: "",
@@ -70,48 +78,12 @@ const SignUp = ({ configData }) => {
       } catch (err) {}
     },
   });
-  const setUpRecaptcha = () => {
-    // Check if reCAPTCHA is already initialized
-    if (!window.recaptchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(
-        "recaptcha-container",
-        {
-          size: "invisible",
-          callback: (response) => {
-            console.log("Recaptcha verified", response);
-          },
-          "expired-callback": () => {
-            window.recaptchaVerifier?.reset();
-          },
-        },
-        auth
-      );
-    } else {
-      // Only reset without re-initializing
-      window.recaptchaVerifier?.reset();
-    }
-  };
-
-  const sendOTP = () => {
-    setUpRecaptcha();
-    const phoneNumber = signUpFormik?.values?.phone;
-    // country code
-    const appVerifier = window.recaptchaVerifier;
-    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-      .then((confirmationResult) => {
-        setVerificationId(confirmationResult.verificationId);
-        setOtpData({ phone: phoneNumber });
-      })
-      .catch((error) => {
-        console.log("Error in sending OTP", error);
-      });
-  };
-  const handleClose = () => {
+  const handleCloseOtp = () => {
     setOpenOtpModal(false);
   };
 
   const fNameHandler = (value) => {
-    signUpFormik.setFieldValue("f_name", value);
+    signUpFormik.setFieldValue("name", value);
   };
   const lNameHandler = (value) => {
     signUpFormik.setFieldValue("l_name", value);
@@ -140,11 +112,11 @@ const SignUp = ({ configData }) => {
     location = localStorage.getItem("location");
   }
   useEffect(() => {
-    if (otpData?.phone !== "") {
+    if (otpData?.type !== "") {
       setOpenOtpModal(true);
     }
   }, [otpData]);
-  const dispatch = useDispatch();
+
   const userOnSuccessHandler = (res) => {
     dispatch(setUser(res));
     //handleClose()
@@ -156,12 +128,18 @@ const SignUp = ({ configData }) => {
       localStorage.setItem("token", response?.token);
       profileRefetch();
       toast.success(t(signup_successfull));
+      dispatch(setWelcomeModal(true));
       const zoneSelected = JSON.parse(localStorage.getItem("zoneid"));
-      if (zoneSelected) {
-        setOpenModuleSelection(true);
+      if (zoneSelected && getCurrentModuleType()) {
+        if (getCurrentModuleType() !== "parcel") {
+          router.push("/interest", undefined, { shallow: true });
+        } else {
+          router.push("/home", undefined, { shallow: true });
+        }
       } else {
         router.push("/home", undefined, { shallow: true });
       }
+      handleClose();
     }
   };
 
@@ -179,6 +157,7 @@ const SignUp = ({ configData }) => {
         router.push("/home", undefined, { shallow: true });
       }
     }
+
     setOpenModuleSelection(false);
   };
   // const handleCloseWelcomeModal = () => {
@@ -194,79 +173,110 @@ const SignUp = ({ configData }) => {
 
   const { mutate, isLoading, error } = useSignUp();
   const formSubmitHandler = (values) => {
-    const nweValues = { ...values, guest_id: guestId };
-    mutate(nweValues, {
+    const signUpData = {
+      name: values.name,
+      email: values.email,
+      phone: values.phone,
+      password: values.password,
+      confirm_password: values.confirm_password,
+      ref_code: values.ref_code,
+      guest_id: values?.guest_id ?? getGuestId(),
+    };
+    setLoginValue(signUpData);
+    mutate(signUpData, {
       onSuccess: async (response) => {
-        setDefaultLanguage();
-        if (configData?.customer_verification) {
-          if (configData?.firebase_otp_verification === 1) {
-            if (Number.parseInt(response?.is_phone_verified) === 1) {
-              await handleTokenAfterSignUp(response);
-            } else {
-              //
-              await sendOTP();
-              setMainToken(response);
-            }
-          } else {
-            if (Number.parseInt(response?.is_phone_verified) === 1) {
-              handleTokenAfterSignUp(response);
-            } else {
-              setOtpData({ phone: values?.phone });
-              setMainToken(response);
-            }
-          }
-        } else {
-          handleTokenAfterSignUp(response);
-        }
+        getLoginUserCheck(
+          response,
+          signUpData,
+          handleTokenAfterSignUp,
+          setOtpData,
+          setMainToken,
+          sendOTP,
+          configData
+        );
       },
       onError: onErrorResponse,
     });
   };
 
-  const handleClick = () => {
-    window.open("/terms-and-conditions");
+  const reSendOtp = () => {
+    const values = {
+      email_or_phone: signUpFormik?.values?.phone,
+      login_type: "manual",
+      password: signUpFormik?.values?.password,
+      guest_id: getGuestId(),
+      field_type: "phone",
+    };
+    loginMutation(values);
   };
-  const { mutate: otpVerifyMutate, isLoading: isLoadingOtpVerifyApi } =
+
+  const { mutate: otpVerifyMutate, isLoading: isLoadingOtpVerifiyAPi } =
     useVerifyPhone();
+
+  const { mutate: fireBaseOtpMutation, isLoading: fireIsLoading } =
+    useFireBaseOtpVerify();
   const otpFormSubmitHandler = (values) => {
     const onSuccessHandler = (res) => {
-      toast.success(res?.message);
       setOpenOtpModal(false);
-      handleTokenAfterSignUp(mainToken);
+      handleTokenAfterSignUp(res);
     };
-    if (configData?.firebase_otp_verification === 1) {
+
+    if (
+      configData?.firebase_otp_verification === 1 &&
+      configData?.centralize_login?.phone_verification_status === 1
+    ) {
       const temValue = {
-        phoneNumber: values?.phone,
-        sessionInfo: verificationId,
-        code: values?.reset_token,
+        session_info: verificationId,
+        phone: values.phone,
+        otp: values.reset_token,
+        login_type: "manual",
+        guest_id: getGuestId(),
       };
       fireBaseOtpMutation(temValue, {
         onSuccess: onSuccessHandler,
         onError: onErrorResponse,
       });
     } else {
-      otpVerifyMutate(values, {
+      let tempValues = {
+        [otpData?.verification_type]: otpData.type,
+        otp: values.reset_token,
+        login_type: otpData?.login_type,
+        verification_type: otpData?.verification_type,
+        guest_id: getGuestId(),
+      };
+
+      otpVerifyMutate(tempValues, {
         onSuccess: onSuccessHandler,
-        onError: onSingleErrorResponse,
+        onError: (error) => {
+          toast.error(error?.response?.data?.message, {
+            id: "error",
+          });
+        },
       });
     }
   };
 
+  const handleSignIn = () => {
+    setModalFor("sign-in");
+  };
+
+  const handleClick = () => {
+    window.open("/terms-and-conditions");
+  };
   return (
     <>
-      <CustomStackFullWidth
-        justifyContent="center"
-        alignItems="center"
-        pb="80px"
-      >
-        <Box maxWidth="500px" width="100%" mt={{ xs: "0rem", md: "1rem" }}>
-          <CustomPaperBigCard>
-            <CustomStackFullWidth
-              // justifyContent="center"
-              // alignItems="center"
-              spacing={2}
-            >
-              <AuthHeader configData={configData} title={t("Sign Up")} />
+      <CustomStackFullWidth justifyContent="center" alignItems="center">
+        <CustomStackFullWidth justifyContent="center" alignItems="center">
+          <Box
+            sx={{
+              maxWidth: "650px",
+              padding: { xs: "30px", md: "47px" },
+              minWidth: { xs: "300px", md: "450px" },
+            }}
+            width="100%"
+          >
+            <CustomStackFullWidth spacing={2}>
+              <AuthHeader configData={configData} />
               <form noValidate onSubmit={signUpFormik.handleSubmit}>
                 <CustomStackFullWidth spacing={2}>
                   <SignUpForm
@@ -306,35 +316,44 @@ const SignUp = ({ configData }) => {
                       }}
                     >
                       {t("Already have an account?")}{" "}
-                      <Link
-                        href={{
-                          pathname: "/auth/sign-in",
-                          query: {
-                            from: "sign-up",
-                          },
-                        }}
+                      <span
+                        onClick={handleSignIn}
                         style={{
                           color: theme.palette.primary.main,
                           textDecoration: "underline",
+                          cursor: "pointer",
                         }}
                       >
                         {t("Sign In")}
-                      </Link>
+                      </span>
                     </Typography>
                   </CustomStackFullWidth>
                 </CustomStackFullWidth>
               </form>
             </CustomStackFullWidth>
-          </CustomPaperBigCard>
-        </Box>
+          </Box>
+        </CustomStackFullWidth>
         <CustomModal handleClose={handleClose} openModal={openOtpModal}>
           <OtpForm
-            data={otpData}
+            data={otpData?.phone}
             formSubmitHandler={otpFormSubmitHandler}
-            isLoading={isLoadingOtpVerifyApi || fireIsLoading}
+            isLoading={isLoadingOtpVerifiyAPi || fireIsLoading}
           />
         </CustomModal>
       </CustomStackFullWidth>
+      <CustomModal
+        handleClose={() => setOpenOtpModal(false)}
+        openModal={openOtpModal}
+      >
+        <OtpForm
+          data={otpData?.type ? otpData?.type : signUpFormik?.values?.phone}
+          formSubmitHandler={otpFormSubmitHandler}
+          isLoading={isLoadingOtpVerifiyAPi || fireIsLoading}
+          loginValue={loginValue}
+          reSendOtp={reSendOtp}
+          handleClose={() => setOpenOtpModal(false)}
+        />
+      </CustomModal>
       {openModuleSelection && (
         <ModuleSelection
           location={location}

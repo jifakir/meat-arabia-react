@@ -124,7 +124,6 @@ const ChatMessageAdd = ({
     setBody({ ...body, file: [...body.file, ...e.target.files] });
   };
   const { data: automateMessageData } = useGetOrderCancelReason();
-  console.log({ automateMessageData });
   const removeImage = (name) => {
     const tempData = body.file.filter((item) => item.name !== name);
     setBody({ ...body, file: tempData });

@@ -89,6 +89,8 @@ const ForgotPasswordNumberForm = ({
             touched={phoneFormik.touched.phone}
             errors={phoneFormik.errors.phone}
             lanDirection={lanDirection}
+            height="45px"
+            borderRadius="10px"
           />
           <LoadingButton
             type="submit"

@@ -121,7 +121,7 @@ const CategoryPopover = ({
         id: item?.id,
         module_id: `${getModuleId()}`,
         name: btoa(item?.name),
-        data_type: "subcategory",
+        data_type: "category",
       },
     });
     handlePopoverCloseSub?.();

@@ -181,7 +181,6 @@ const Chatting = ({ configData }) => {
   const { mutate: storeMessageByMutate, isLoading: isLoadingMessageSend } =
     useStoreMessage();
   const handleChatMessageSend = (values) => {
-    console.log({ values });
     let newValues = {
       receiver_type: receiverType,
       id: channelId,

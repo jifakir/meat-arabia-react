@@ -372,7 +372,7 @@ export const CustomOtp = styled(OutlinedInput)(({ theme }) => ({
 export const CustomTextFieldContainer = styled(Box)(
   ({ theme, background, noheight }) => ({
     width: "100%",
-    height: !noheight && "5.5rem",
+    height: !noheight && "5rem",
     color: theme.palette.neutral[1000],
   })
 );

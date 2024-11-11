@@ -6,17 +6,15 @@ import {
   isSupported,
 } from "firebase/messaging";
 import { getAuth } from "firebase/auth";
-
 const firebaseConfig = {
   apiKey: "AIzaSyCfChwio0OKyBUxszmmEWvYzVfTD5UqWiA",
   authDomain: "meat-arabia.firebaseapp.com",
   projectId: "meat-arabia",
-  storageBucket: "meat-arabia.appspot.com",
+  storageBucket: "meat-arabia.firebasestorage.app",
   messagingSenderId: "576848588363",
   appId: "1:576848588363:web:c18024a51a2eaeaba167ce",
   measurementId: "G-C6G3QVK2WT"
 };
-
 const firebaseApp = !getApps().length
   ? initializeApp(firebaseConfig)
   : getApp();

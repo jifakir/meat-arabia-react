@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { Stack } from "@mui/system";
-import H1 from "../../typographies/H1";
 import { Grid } from "@mui/material";
-import SenderInfoForm from "./SenderInfoForm";
-import ReceiverInfoFrom from "./ReceiverInfoFrom";
-import ParcelInfo from "./ParcelInfo";
+import { Stack } from "@mui/system";
 import { useFormik } from "formik";
-import { CustomStackFullWidth } from "styled-components/CustomStyles.style";
+import { getToken } from "helper-functions/getToken";
+import { t } from "i18next";
 import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import { useGeolocated } from "react-geolocated";
-import ValidationSchema from "./ValidationSchema";
+import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { setParcelData } from "redux/slices/parcelDeliveryInfo";
-import toast from "react-hot-toast";
-import { t } from "i18next";
+import { CustomStackFullWidth } from "styled-components/CustomStyles.style";
 import GuestCheckoutModal from "../../cards/GuestCheckoutModal";
-import { getToken } from "helper-functions/getToken";
+import H1 from "../../typographies/H1";
+import ParcelInfo from "./ParcelInfo";
+import ReceiverInfoFrom from "./ReceiverInfoFrom";
+import SenderInfoForm from "./SenderInfoForm";
+import ValidationSchema from "./ValidationSchema";
+import AuthModal from "components/auth/AuthModal";
 
 const PercelDelivery = ({ configData }) => {
   const router = useRouter();
@@ -35,6 +36,8 @@ const PercelDelivery = ({ configData }) => {
   const [open, setOpen] = useState(false);
   const [sideDrawerOpen, setSideDrawerOpen] = useState(false);
   let token = getToken();
+  const [openAuth, setOpenAuth] = useState(false);
+  const [modalFor, setModalFor] = useState("sign-in");
   // if (typeof window !== undefined) {
   //   token = localStorage.getItem("token");
   // }
@@ -175,7 +178,7 @@ const PercelDelivery = ({ configData }) => {
             { shallow: true }
           );
         } else {
-          router.push("/auth/sign-in");
+          setOpenAuth(true);
         }
       }
     } else {
@@ -193,6 +196,7 @@ const PercelDelivery = ({ configData }) => {
           text="Parcel Delivery Information"
           textAlign="left"
           fontWeight="600"
+          component="h1"
         />
       </Stack>
       <form noValidate onSubmit={addAddressFormik.handleSubmit}>
@@ -242,8 +246,16 @@ const PercelDelivery = ({ configData }) => {
           setOpen={setOpen}
           setSideDrawerOpen={setSideDrawerOpen}
           handleRoute={handleRoute}
+          setModalFor={setModalFor}
+          setOpenAuth={setOpenAuth}
         />
       )}
+      <AuthModal
+        modalFor={modalFor}
+        setModalFor={setModalFor}
+        open={openAuth}
+        handleClose={() => setOpenAuth(false)}
+      />
     </CustomStackFullWidth>
   );
 };

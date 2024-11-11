@@ -15,9 +15,7 @@ const useFirebasePhoneAuth = () => {
         "recaptcha-container",
         {
           size: "invisible",
-          callback: (response) => {
-            console.log("Recaptcha verified", response);
-          },
+          callback: (response) => {},
           "expired-callback": () => {
             window.recaptchaVerifier?.reset();
           },
@@ -41,7 +39,6 @@ const useFirebasePhoneAuth = () => {
       })
       .catch((error) => {
         setError(error.message);
-        console.log("Error in sending OTP", error);
       });
   };
 
