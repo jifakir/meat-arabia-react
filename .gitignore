@@ -1,0 +1,44 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Next.js build output
+.next
+out
+
+# Local environment variables
+.env
+.env.local
+.env.development
+.env.development.local
+.env.production.local
+.env.test.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local environment variables
+.env
+.env.*.local
+
+# Next.js cache
+.next/cache
+
+# VS Code settings
+.vscode/*
+
+# MacOS files
+.DS_Store
+
+# Linux files
+*.swp
+
+# Windows files
+Thumbs.db
+
+# Other config files
+coverage
