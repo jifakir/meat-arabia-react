@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { CustomImageContainerStyled } from "../styled-components/CustomStyles.style";
-import placeholder from "../../public/static/no-image-found.png";
-import { Box } from "@mui/system";
+import React, { useEffect, useState } from 'react';
+import { CustomImageContainerStyled } from '../styled-components/CustomStyles.style';
+import placeholder from '../../public/static/no-image-found.png';
+import { Box } from '@mui/system';
 
 const CustomImageContainer = ({
   cursor,
@@ -49,8 +49,8 @@ const CustomImageContainer = ({
       {!imageFile ? (
         <Box
           sx={{
-            height: "100%",
-            width: "100%",
+            height: '100%',
+            width: '100%',
             border: (theme) => `1px solid ${theme.palette.neutral[200]}`,
           }}
         />

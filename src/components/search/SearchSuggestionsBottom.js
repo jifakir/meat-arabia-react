@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { Paper, Stack } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import { CustomStackFullWidth } from "../../styled-components/CustomStyles.style";
-import { useTranslation } from "react-i18next";
-import { useRouter } from "next/router";
-import Skeleton from "@mui/material/Skeleton";
-import useGetSuggestedProducts from "../../api-manage/hooks/react-query/search/useGetSuggestedProducts";
-import RecentSearchWithSuggestions from "./recent-search/RecentSearchWithSuggestions";
-import SuggestedSearches from "./recent-search/SuggestedSearches";
-import { getCurrentModuleType } from "../../helper-functions/getCurrentModuleType";
-import { ModuleTypes } from "../../helper-functions/moduleTypes";
+import React, { useEffect, useState } from 'react';
+import { Paper, Stack } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { CustomStackFullWidth } from '../../styled-components/CustomStyles.style';
+import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/router';
+import Skeleton from '@mui/material/Skeleton';
+import useGetSuggestedProducts from '../../api-manage/hooks/react-query/search/useGetSuggestedProducts';
+import RecentSearchWithSuggestions from './recent-search/RecentSearchWithSuggestions';
+import SuggestedSearches from './recent-search/SuggestedSearches';
+import { getCurrentModuleType } from '../../helper-functions/getCurrentModuleType';
+import { ModuleTypes } from '../../helper-functions/moduleTypes';
 
 const CustomPaper = styled(Paper)(({ theme, display, padding }) => ({
-  position: "absolute",
+  position: 'absolute',
   top: getCurrentModuleType() === ModuleTypes.FOOD ? 77 : 32,
-  width: "100%",
-  padding: "1.5rem 1.5rem 2rem 1.5rem",
+  width: '100%',
+  padding: '1.5rem 1.5rem 2rem 1.5rem',
   zIndex: 999,
-  display: display ? display : "inherit",
-  borderTopLeftRadius: "0px",
-  borderTopRightRadius: "0px",
+  display: display ? display : 'inherit',
+  borderTopLeftRadius: '0px',
+  borderTopRightRadius: '0px',
 }));
 const SearchSuggestionsBottom = (props) => {
   const {
@@ -37,8 +37,8 @@ const SearchSuggestionsBottom = (props) => {
   const { t } = useTranslation();
   const router = useRouter();
   let token = undefined;
-  if (typeof window !== "undefined") {
-    token = localStorage.getItem("token");
+  if (typeof window !== 'undefined') {
+    token = localStorage.getItem('token');
   }
 
   const handleSearchSuccess = (res) => {
@@ -49,7 +49,7 @@ const SearchSuggestionsBottom = (props) => {
     useGetSuggestedProducts(handleSearchSuccess);
 
   useEffect(() => {
-    let getItem = JSON.parse(localStorage.getItem("searchedValues"));
+    let getItem = JSON.parse(localStorage.getItem('searchedValues'));
     if (getItem && getItem.length > 0) {
       const uniqueItems = Array.from(new Set([...list, ...getItem]));
       setList(uniqueItems);
@@ -64,10 +64,10 @@ const SearchSuggestionsBottom = (props) => {
     setOpenSearchSuggestions(false);
     router.push(
       {
-        pathname: "/home",
+        pathname: '/home',
         query: {
           search: value,
-          data_type: "searched",
+          data_type: 'searched',
         },
       },
       undefined,
@@ -81,26 +81,26 @@ const SearchSuggestionsBottom = (props) => {
     setOpenSearchSuggestions(false);
     router.push(
       {
-        pathname: "/search",
+        pathname: '/search',
         query: {
-          searchValue: value.substring(0, value.indexOf(" ")),
+          searchValue: value.substring(0, value.indexOf(' ')),
         },
       },
-      "/search"
+      '/search'
     );
   };
 
   const handleDeleteAble = (value) => {
-    let getItem = JSON.parse(localStorage.getItem("searchedValues"));
+    let getItem = JSON.parse(localStorage.getItem('searchedValues'));
     if (getItem && getItem.length > 0) {
       let newItems = getItem.filter((item) => item !== value);
       setList(newItems);
-      localStorage.setItem("searchedValues", JSON.stringify(newItems));
+      localStorage.setItem('searchedValues', JSON.stringify(newItems));
     }
   };
   const clearAll = () => {
     setList([]);
-    localStorage.removeItem("searchedValues");
+    localStorage.removeItem('searchedValues');
   };
   return (
     <>
@@ -111,11 +111,11 @@ const SearchSuggestionsBottom = (props) => {
         display={
           token
             ? list.length > 0 || itemOrStoreSuggestionData
-              ? "inherit"
-              : "none"
+              ? 'inherit'
+              : 'none'
             : list.length > 0 || itemOrStoreSuggestionData
-            ? "inherit"
-            : "none"
+            ? 'inherit'
+            : 'none'
         }
       >
         <CustomStackFullWidth spacing={1}>

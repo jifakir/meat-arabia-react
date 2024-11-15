@@ -1,47 +1,49 @@
 /* eslint-disable @next/next/no-img-element */
-import { styled, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { Box } from "@mui/system";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { styled, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box } from '@mui/system';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import useGetLastOrderWithoutReview from "api-manage/hooks/react-query/review/useGetLastOrderWithoutReview";
-import useReviewReminderCancel from "api-manage/hooks/react-query/review/useReviewReminderCancel";
-import { useWishListGet } from "api-manage/hooks/react-query/wish-list/useWishListGet";
+import useGetLastOrderWithoutReview from 'api-manage/hooks/react-query/review/useGetLastOrderWithoutReview';
+import useReviewReminderCancel from 'api-manage/hooks/react-query/review/useReviewReminderCancel';
+import { useWishListGet } from 'api-manage/hooks/react-query/wish-list/useWishListGet';
 
 import {
   setFilterData,
   setStoreSelectedItems,
   setStoreSelectedItems2,
-} from "redux/slices/categoryIds";
-import { setWishList } from "redux/slices/wishList";
+} from 'redux/slices/categoryIds';
+import { setWishList } from 'redux/slices/wishList';
 
-import CashBackPopup from "components/cash-back-popup/CashBackPopup";
-import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
-import { getToken } from "helper-functions/getToken";
-import { ModuleTypes } from "helper-functions/moduleTypes";
-import { t } from "i18next";
-import { setWelcomeModal } from "redux/slices/utils";
-import { CustomStackFullWidth } from "styled-components/CustomStyles.style";
-import { removeSpecialCharacters } from "utils/CustomFunctions";
-import PushNotificationLayout from "../PushNotificationLayout";
-import CustomModal from "../modal";
-import LastOrderReview from "./LastOrderReview";
-import SearchWithTitle from "./SearchWithTitle";
-import Grocery from "./module-wise-components/Grocery";
-import Shop from "./module-wise-components/ecommerce";
-import FoodModule from "./module-wise-components/food";
-import Parcel from "./module-wise-components/parcel/Index";
-import Pharmacy from "./module-wise-components/pharmacy/Pharmacy";
-import SearchResult from "./search";
-import TopBanner from "./top-banner";
+import CashBackPopup from 'components/cash-back-popup/CashBackPopup';
+import { getCurrentModuleType } from 'helper-functions/getCurrentModuleType';
+import { getToken } from 'helper-functions/getToken';
+import { ModuleTypes } from 'helper-functions/moduleTypes';
+import { t } from 'i18next';
+import { setWelcomeModal } from 'redux/slices/utils';
+import { CustomStackFullWidth } from 'styled-components/CustomStyles.style';
+import { removeSpecialCharacters } from 'utils/CustomFunctions';
+import PushNotificationLayout from '../PushNotificationLayout';
+import CustomModal from '../modal';
+import LastOrderReview from './LastOrderReview';
+import SearchWithTitle from './SearchWithTitle';
+import Grocery from './module-wise-components/Grocery';
+import Shop from './module-wise-components/ecommerce';
+import FoodModule from './module-wise-components/food';
+import Parcel from './module-wise-components/parcel/Index';
+import Pharmacy from './module-wise-components/pharmacy/Pharmacy';
+import SearchResult from './search';
+import TopBanner from './top-banner';
+import HeroSection from '../landing-page/hero-section/HeroSection';
+import CustomContainer from '../container';
 
 export const HomeComponentsWrapper = styled(Box)(({ theme }) => ({
-  width: "100%",
-  gap: "8px",
+  width: '100%',
+  gap: '8px',
 }));
 
-const HomePageComponents = ({ configData }) => {
+const HomePageComponents = ({ configData, landingPageData }) => {
   const [wishListsData, setWishListsData] = useState();
   const [orderId, setOrderId] = useState(null);
   const [open, setOpen] = useState(false);
@@ -50,12 +52,19 @@ const HomePageComponents = ({ configData }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const theme = useTheme();
-  const isSmall = useMediaQuery(theme.breakpoints.down("md"));
+  const isSmall = useMediaQuery(theme.breakpoints.down('md'));
   const { modules } = useSelector((state) => state.storedData);
   const { welcomeModal } = useSelector((state) => state.utilsData);
+  const [currentLocation, setCurrentLocation] = useState(null);
   const zoneid =
-    typeof window !== "undefined" ? localStorage.getItem("zoneid") : undefined;
+    typeof window !== 'undefined' ? localStorage.getItem('zoneid') : undefined;
   const token = getToken();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentLocation(window.localStorage.getItem('location'));
+    }
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -126,45 +135,65 @@ const HomePageComponents = ({ configData }) => {
   const handleCloseWelcomeModal = () => {
     dispatch(setWelcomeModal(false));
   };
+  const handleOrderNow = () => {
+    if (currentLocation) {
+      if (currentLocation === 'null') {
+        setOpen(true);
+      } else {
+        router.push('/home', undefined, { shallow: true });
+      }
+    } else {
+      setOpen(true);
+    }
+  };
   return (
     <PushNotificationLayout>
-      <CustomStackFullWidth>
-        <CustomStackFullWidth sx={{ position: "relative" }}>
-          <TopBanner />
-          <CustomStackFullWidth
-            alignItems="center"
-            justifyContent="center"
-            sx={{ position: "absolute", top: 0, height: "100%" }}
-          >
-            <SearchWithTitle
-              currentTab={currentTab}
-              zoneid={zoneid}
-              token={token}
-              searchQuery={
-                router.query?.data_type === "searched"
-                  ? router.query.search
-                  : ""
-              }
-              name={router.query.name}
-              query={router.query}
-            />
+      {currentLocation ? (
+        <CustomStackFullWidth>
+          <CustomStackFullWidth sx={{ position: 'relative' }}>
+            <TopBanner />
+            <CustomStackFullWidth
+              alignItems="center"
+              justifyContent="center"
+              sx={{ position: 'absolute', top: 0, height: '100%' }}
+            >
+              <SearchWithTitle
+                currentTab={currentTab}
+                zoneid={zoneid}
+                token={token}
+                searchQuery={
+                  router.query?.data_type === 'searched'
+                    ? router.query.search
+                    : ''
+                }
+                name={router.query.name}
+                query={router.query}
+              />
+            </CustomStackFullWidth>
           </CustomStackFullWidth>
+          {currentLocation &&
+            (router.query.data_type ? (
+              <SearchResult
+                key={router.query.id}
+                searchValue={router.query.search}
+                name={router.query.name}
+                isSearch={router.query.fromSearch}
+                routeTo={router.query.from}
+                configData={configData}
+                currentTab={currentTab}
+                setCurrentTab={setCurrentTab}
+              />
+            ) : (
+              <Box width="100%">{getModuleWiseComponents()}</Box>
+            ))}
         </CustomStackFullWidth>
-        {router.query.data_type ? (
-          <SearchResult
-            key={router.query.id}
-            searchValue={router.query.search}
-            name={router.query.name}
-            isSearch={router.query.fromSearch}
-            routeTo={router.query.from}
-            configData={configData}
-            currentTab={currentTab}
-            setCurrentTab={setCurrentTab}
-          />
-        ) : (
-          <Box width="100%">{getModuleWiseComponents()}</Box>
-        )}
-      </CustomStackFullWidth>
+      ) : (
+        <HeroSection
+          configData={configData}
+          landingPageData={landingPageData}
+          handleOrderNow={handleOrderNow}
+        />
+      )}
       {open && (
         <CustomModal openModal={open} handleClose={handleClose}>
           <LastOrderReview
@@ -181,42 +210,42 @@ const HomePageComponents = ({ configData }) => {
       >
         <Box
           sx={{
-            maxWidth: "382px",
-            width: "95vw",
+            maxWidth: '382px',
+            width: '95vw',
             px: 1.3,
             pb: 4,
-            textAlign: "center",
+            textAlign: 'center',
             img: {
-              height: "unset",
+              height: 'unset',
             },
           }}
         >
           <img
-            src={"/static/sign-up-welcome.svg"}
+            src={'/static/sign-up-welcome.svg'}
             alt="welcome"
             width={183}
             height={183}
           />
-          <Box maxWidth={"308px"} mx={"auto"} mt={2}>
+          <Box maxWidth={'308px'} mx={'auto'} mt={2}>
             <Typography variant="h6" color="primary" mb={2}>
-              {t("Welcome to 6amMart!")}
+              {t('Welcome to 6amMart!')}
             </Typography>
-            <Typography variant="body2" lineHeight={"1.5"}>
+            <Typography variant="body2" lineHeight={'1.5'}>
               {profileInfo?.is_valid_for_discount
                 ? t(
                     `Get ready for a special welcome gift, enjoy a special discount on your first order within`
                   ) +
-                  " " +
+                  ' ' +
                   profileInfo?.validity +
-                  "."
-                : " "}
-              {"  "}
+                  '.'
+                : ' '}
+              {'  '}
               {t(`Start exploring the best services around you.`)}
             </Typography>
           </Box>
         </Box>
       </CustomModal>
-      {token && getCurrentModuleType() !== "parcel" && <CashBackPopup />}
+      {token && getCurrentModuleType() !== 'parcel' && <CashBackPopup />}
     </PushNotificationLayout>
   );
 };

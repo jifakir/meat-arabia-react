@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 const ZoneGuard = (props) => {
   const { children } = props;
@@ -10,13 +10,15 @@ const ZoneGuard = (props) => {
       if (!router.isReady) {
         return;
       }
-      const zoneId = JSON.parse(localStorage.getItem("zoneid"));
-      const location = localStorage.getItem("location");
-      if (zoneId?.length > 0 && location) {
-        setChecked(true);
-      } else {
-        router.push("/", undefined, { shallow: true });
-      }
+
+      setChecked(true);
+      // const zoneId = JSON.parse(localStorage.getItem('zoneid'));
+      // const location = localStorage.getItem('location');
+      // if (zoneId?.length > 0 && location) {
+      //   setChecked(true);
+      // } else {
+      //   router.push("/", undefined, { shallow: true });
+      // }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [router.isReady]
