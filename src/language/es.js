@@ -700,7 +700,7 @@ export const spain = {
   "some Customer & Restaurant Owners": "بعض العملاء وأصحاب المطاعم",
   "Become a store owner": "كن صاحب متجر",
   "Become A Seller": "كن بائعا",
-  "Register as seller and open shop in 6amMart to start your business":
+  "Register as seller and open shop in Meat Arabia to start your business":
     "سجل كبائع وافتح متجرًا في 6ammart لبدء عملك",
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit.":
     "العميل مهم جدا ، العميل سيتبعه.",
@@ -846,8 +846,8 @@ export const spain = {
   "Complete Multipurpose": "كاملة متعددة الأغراض",
   eBusiness: "الأعمال الإلكترونية",
   Solution: "حل",
-  "6amMart is a Laravel and Flutter Framework-based multi-vendor food, grocery, eCommerce, parcel, and pharmacy delivery system. It has six modules to cover all your business functionality.":
-    "6amMart عبارة عن نظام متعدد البائعين للأغذية والبقالة والتجارة الإلكترونية والطرود والصيدليات قائم على Laravel و Flutter Framework. يحتوي على ست وحدات لتغطية جميع وظائف عملك.",
+  "Meat Arabia is a Laravel and Flutter Framework-based multi-vendor food, grocery, eCommerce, parcel, and pharmacy delivery system. It has six modules to cover all your business functionality.":
+    "Meat Arabia عبارة عن نظام متعدد البائعين للأغذية والبقالة والتجارة الإلكترونية والطرود والصيدليات قائم على Laravel و Flutter Framework. يحتوي على ست وحدات لتغطية جميع وظائف عملك.",
   "Featured Store": "المتجر المميز",
   "Close fullscreen": "إغلاق ملء الشاشة",
   Fullscreen: "تكبير الشاشة",

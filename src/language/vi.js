@@ -791,7 +791,7 @@ export const vietnam = {
   satisfied: "hÃ i lÃ²ng",
   "some Customer & Restaurant Owners": "má»™t sá»‘ KhÃ¡ch hÃ ng & Chá»§ nhÃ  hÃ ng",
   "Become A Seller": "Trá»Ÿ thÃ nh ngÆ°á»i bÃ¡n",
-  "Register as seller and open shop in 6amMart to start your business":
+  "Register as seller and open shop in Meat Arabia to start your business":
     "ÄÄƒng kÃ½ lÃ m ngÆ°á»i bÃ¡n vÃ  má»Ÿ cá»­a hÃ ng táº¡i SAPOMall Ä‘á»ƒ báº¯t Ä‘áº§u cÃ´ng viá»‡c kinh doanh cá»§a báº¡n",
   "Become A Deliveryman": "Trá»Ÿ thÃ nh ngÆ°á»i giao hÃ ng",
   "to start your business": "Ä‘á»ƒ báº¯t Ä‘áº§u cÃ´ng viá»‡c kinh doanh cá»§a báº¡n",
