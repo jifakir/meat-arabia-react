@@ -724,7 +724,7 @@ const ItemCheckout = (props) => {
     }
     localStorage.setItem("totalAmount", totalAmount);
     if (!token) {
-      Router.push("/home");
+      Router.push("/");
       // Router.push(
       //   {
       //     pathname: "/order",

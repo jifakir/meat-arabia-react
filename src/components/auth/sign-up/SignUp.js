@@ -134,10 +134,10 @@ const SignUp = ({
         if (getCurrentModuleType() !== "parcel") {
           router.push("/interest", undefined, { shallow: true });
         } else {
-          router.push("/home", undefined, { shallow: true });
+          router.push("/", undefined, { shallow: true });
         }
       } else {
-        router.push("/home", undefined, { shallow: true });
+        router.push("/", undefined, { shallow: true });
       }
       handleClose();
     }
@@ -154,7 +154,7 @@ const SignUp = ({
       if (item.module_type !== "parcel") {
         router.push("/interest", undefined, { shallow: true });
       } else {
-        router.push("/home", undefined, { shallow: true });
+        router.push("/", undefined, { shallow: true });
       }
     }
 
@@ -167,7 +167,7 @@ const SignUp = ({
   //   ) {
   //     router.push("/interest", undefined, { shallow: true });
   //   } else {
-  //     router.push("/home", undefined, { shallow: true });
+  //     router.push("/", undefined, { shallow: true });
   //   }
   // };
 

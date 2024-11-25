@@ -39,7 +39,7 @@ const CheckoutFailed = (props) => {
       </CardContent>
       <CardActions sx={{ alignItems: "center" }}>
         <Button
-          onClick={() => router.push("/home", undefined, { shallow: true })}
+          onClick={() => router.push("/", undefined, { shallow: true })}
           variant="contained"
           fullWidth
         >

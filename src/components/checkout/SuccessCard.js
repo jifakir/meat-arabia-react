@@ -143,7 +143,7 @@ const SuccessCard = ({ configData, total, order_id }) => {
             {t("Track your order")}
           </Button>
           <Typography
-            onClick={() => router.push("/home", undefined, { shallow: true })}
+            onClick={() => router.push("/", undefined, { shallow: true })}
             variant="contained"
             sx={{
               textDecoration: "underLine",

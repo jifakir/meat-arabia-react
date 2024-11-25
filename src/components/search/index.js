@@ -55,7 +55,7 @@ const ProductSearchPage = ({ configData }) => {
         if (searchValues.length > 0 && searchValues[0]) {
           setSearchValue(searchValues[0]);
         } else {
-          router.push("/home", undefined, { shallow: true });
+          router.push("/", undefined, { shallow: true });
         }
       }
     }

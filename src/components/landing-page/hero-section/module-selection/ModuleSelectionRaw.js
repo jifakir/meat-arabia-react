@@ -134,7 +134,7 @@ const ModuleSelectionRaw = (props) => {
 		setIsSelected(item?.module_type);
 		dispatch(setSelectedModule(item));
 		localStorage.setItem("module", JSON.stringify(item));
-		router.replace("/home");
+		router.replace("/");
 	};
 
 	return (

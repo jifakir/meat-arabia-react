@@ -227,7 +227,7 @@ const HeroLocationForm = () => {
       // if (!selectedModule) {
       //   setOpenModuleSelection(true);
       // } else {
-      //   router.push("/home");
+      //   router.push("/");
       // }
     } else {
       toast.error(t("Location is required."), {
@@ -238,7 +238,7 @@ const HeroLocationForm = () => {
   const handleCloseModuleModal = (item) => {
     if (item) {
       toast.success(t(module_select_success));
-      router.push("/home", undefined, { shallow: true });
+      router.push("/", undefined, { shallow: true });
     }
     setOpenModuleSelection(false);
   };

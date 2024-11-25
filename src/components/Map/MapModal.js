@@ -220,7 +220,7 @@ const MapModal = ({
   const handleCloseModuleModal = (item) => {
     if (item) {
       toast.success(t(module_select_success));
-      router.push("/home", undefined, { shallow: true });
+      // router.push("/", undefined, { shallow: true });
     }
     setOpenModuleSelection(false);
     handleClose?.();

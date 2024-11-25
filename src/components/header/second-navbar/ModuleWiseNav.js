@@ -82,7 +82,7 @@ const ModuleWiseNav = (props) => {
   );
   const handleIconClick = () => {
     if (location) {
-      router.push("/home");
+      router.push("/");
     } else {
       router.push("/");
     }
@@ -130,7 +130,7 @@ const ModuleWiseNav = (props) => {
                 spacing={2}
               >
                 <Grid item xs={2} sm={1} align="left">
-                  {router.pathname === "/home" && !router.query.search ? (
+                  {router.pathname === "/" && !router.query.search ? (
                     modules.length >= 2 ? (
                       <MobileModuleSelection />
                     ) : (

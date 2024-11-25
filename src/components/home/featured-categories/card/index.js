@@ -78,7 +78,7 @@ const FeaturedItemCard = (props) => {
 			) : (
 				<Link
 					href={{
-						pathname: "/home",
+						pathname: "/",
 						query: {
 							search: "category",
 							id: id,

@@ -58,7 +58,7 @@ const CheckoutFailedCard = ({ id, handleOrderDetailsClose }) => {
     toast.success(response.data.message);
     dispatch(setClearCart());
     setOpenModal(false);
-    Router.push("/home", undefined, { shallow: true });
+    Router.push("/", undefined, { shallow: true });
   };
 
   const handleCancelSuccess = () => {
@@ -71,7 +71,7 @@ const CheckoutFailedCard = ({ id, handleOrderDetailsClose }) => {
         onError: onErrorResponse,
       }
     );
-    Router.push("/home", undefined, { shallow: true });
+    Router.push("/", undefined, { shallow: true });
   };
   const handleOrderFail = () => {
     handleCancelSuccess();

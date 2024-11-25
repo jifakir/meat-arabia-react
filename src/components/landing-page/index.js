@@ -47,7 +47,7 @@ const LandingPage = ({ configData, landingPageData }) => {
       if (location === "null") {
         setOpen(true);
       } else {
-        router.push("/home", undefined, { shallow: true });
+        router.push("/", undefined, { shallow: true });
       }
     } else {
       setOpen(true);

@@ -129,7 +129,7 @@ const MobileTopMenu = ({
                 <ListItemText
                   sx={{ fontSize: "12px" }}
                   primary={t("Home")}
-                  onClick={() => handleRoute("/home")}
+                  onClick={() => handleRoute("/")}
                 />
               </ListItemButton>
               {location && (
