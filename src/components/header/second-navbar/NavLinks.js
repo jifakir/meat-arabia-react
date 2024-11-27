@@ -24,7 +24,7 @@ const NavLinks = ({ zoneid, t, moduleType }) => {
     >
       {zoneid && (
         <>
-          <Link href="/home">
+          <Link href="/">
             <NavLinkStyle
               underline="none"
               // language_direction={language_direction}

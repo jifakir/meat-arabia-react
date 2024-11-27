@@ -36,7 +36,7 @@ const FoodCategoryCard = (props) => {
 
 	const handleClick = () => {
 		router.push({
-			pathname: "/home",
+			pathname: "/",
 			query: {
 				search: "category",
 				id: id,

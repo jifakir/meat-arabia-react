@@ -20,11 +20,12 @@ const MainLayout = ({ children, configData, landingPageData }) => {
 	const { page } = router.query;
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		if (router.pathname === "/home") {
-			refetch();
-		}
-	}, []);
+	// useEffect(() => {
+	// 	if (router.pathname === "/") {
+	// 		refetch();
+	// 	}
+	// }, []);
+	
 	if (data) {
 		const selectedModuleType = JSON.parse(
 			localStorage.getItem("module")

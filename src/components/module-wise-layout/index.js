@@ -45,7 +45,7 @@ const ModuleWiseLayout = ({ configData, landingPageData }) => {
 
   const moduleSelectHandler = async (item) => {
     if (router.query.search) {
-      await router.replace('/home');
+      // await router.replace('/home');
     }
     localStorage.setItem('module', JSON.stringify(item));
     dispatch(setSelectedModule(item));

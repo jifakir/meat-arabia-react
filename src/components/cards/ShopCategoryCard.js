@@ -75,7 +75,7 @@ const ShopCategoryCard = (props) => {
 			) : (
 				<Link
 					href={{
-						pathname: "/home",
+						pathname: "/",
 						query: {
 							search: "category",
 							id: `${item?.slug ? item?.slug : item?.id}`,

@@ -15,7 +15,7 @@ const Index = ({ configData, landingPageData }) => {
 		const token = localStorage.getItem("token");
 		if (token) {
 			setToken(token);
-			router.push("/home");
+			router.push("/");
 		}
 	}, []);
 	return (

@@ -57,7 +57,7 @@ const DeliveryManComponent = ({ configData }) => {
             helpers.resetForm();
             setImage("");
             setIdentityImage("");
-            router.push("/home");
+            router.push("/");
           },
           onError: onErrorResponse,
         });

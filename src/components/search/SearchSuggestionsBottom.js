@@ -64,7 +64,7 @@ const SearchSuggestionsBottom = (props) => {
     setOpenSearchSuggestions(false);
     router.push(
       {
-        pathname: '/home',
+        pathname: '/',
         query: {
           search: value,
           data_type: 'searched',

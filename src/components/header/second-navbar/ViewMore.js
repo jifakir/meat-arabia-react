@@ -14,7 +14,7 @@ const ViewMore = ({ redirect, handlePopoverCloseSub, buttonType }) => {
     if (redirect === "/categories") {
       router.push(
         {
-          pathname: "/home",
+          pathname: "/",
           query: {
             search: VIEW_ALL_TEXT.allCategories,
             from: "allCategories",

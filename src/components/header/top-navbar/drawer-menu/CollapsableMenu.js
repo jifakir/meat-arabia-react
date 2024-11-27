@@ -27,7 +27,7 @@ const CollapsableMenu = ({
   const handleRoute = (id) => {
     if (forcategory === "true") {
       router.push({
-        pathname: "/home",
+        pathname: "/",
         query: {
           search: "category",
           id: id,
@@ -51,7 +51,7 @@ const CollapsableMenu = ({
     if (pathName === "/categories") {
       router.push(
         {
-          pathname: "/home",
+          pathname: "/",
           query: {
             search: VIEW_ALL_TEXT.allCategories,
             from: "allCategories",

@@ -21,7 +21,7 @@ const AuthGuard = (props) => {
       } else {
         router.push(
           {
-            pathname: "/home",
+            pathname: "/",
             query: { from: from },
           },
           undefined,

@@ -66,7 +66,7 @@ const InterestOptions = ({ configData }) => {
           toast.success(response?.message);
           dispatch(setInterestId(selectedId));
           dispatch(setExistingModuleIds(categoryList[0]?.module_id));
-          Router.push("/home", undefined, { shallow: true });
+          Router.push("/", undefined, { shallow: true });
         },
         onError: (error) => {
           toast.error(error?.response?.data?.message);

@@ -101,7 +101,7 @@ const CategoryPopover = ({
   const handleClick = (item) => {
     //dispatch(setStoreSelectedItems([]));
     router.push({
-      pathname: "/home",
+      pathname: "/",
       query: {
         search: "category",
         id: item?.id,
@@ -115,7 +115,7 @@ const CategoryPopover = ({
   };
   const handleClickToSubCategory = (item) => {
     router.push({
-      pathname: "/home",
+      pathname: "/",
       query: {
         search: "category",
         id: item?.id,

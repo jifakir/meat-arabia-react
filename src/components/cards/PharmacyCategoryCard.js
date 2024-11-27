@@ -74,7 +74,7 @@ const PharmacyCategoryCard = (props) => {
 			) : (
 				<Link
 					href={{
-						pathname: "/home",
+						pathname: "/",
 						query: {
 							search: "category",
 							id: id,

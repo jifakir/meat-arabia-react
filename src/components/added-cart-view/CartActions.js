@@ -38,7 +38,7 @@ const CartActions = (props) => {
     } else {
       if (cartList?.length === 0) {
         setSideDrawerOpen(false);
-        router.push("/home", undefined, { shallow: true });
+        router.push("/", undefined, { shallow: true });
       } else {
         setSideDrawerOpen(false);
         setOpenAuth(true);
@@ -51,10 +51,10 @@ const CartActions = (props) => {
   //     router.push("/checkout?page=cart", undefined, { shallow: true });
   //     setSideDrawerOpen(false);
   //   } else {
-  //     if (router.pathname === "/home") {
+  //     if (router.pathname === "/") {
   //       setSideDrawerOpen(false);
   //     } else {
-  //       router.push("/home", undefined, { shallow: true });
+  //       router.push("/", undefined, { shallow: true });
   //     }
   //   }
   // };

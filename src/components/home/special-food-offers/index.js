@@ -132,7 +132,7 @@ const SpecialFoodOffers = ({ title }) => {
               ) : (
                 <Link
                   href={{
-                    pathname: "/home",
+                    pathname: "/",
                     query: {
                       search: "special-offer",
                       module_id: getModuleId(),

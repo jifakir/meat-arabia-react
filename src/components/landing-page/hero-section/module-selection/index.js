@@ -124,7 +124,7 @@ export const ModuleSelection = ({
     dispatch(setSelectedModule(data));
     localStorage.setItem("module", JSON.stringify(data));
     setOpenModuleSelection?.(false);
-    router.push("/home");
+    router.push("/");
   };
   const innerContent = () => {
     if (isFetched) {

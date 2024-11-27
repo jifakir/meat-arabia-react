@@ -76,7 +76,7 @@ const Brands = ({ viewAll }) => {
 	useEffect(() => {
 		if (!isLoading && !isFetching) {
 			if (data?.length === 0 && viewAll) {
-				router.push("/home");
+				router.push("/");
 			}
 		}
 	}, [isLoading, isFetching]);

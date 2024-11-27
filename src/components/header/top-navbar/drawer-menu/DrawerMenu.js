@@ -43,7 +43,7 @@ const DrawerMenu = ({ setToggled, openDrawer, setOpenDrawer }) => {
         if (router.pathname === "/") {
           router.push("/", undefined, { shallow: true });
         } else {
-          router.push("/home", undefined, { shallow: true });
+          router.push("/", undefined, { shallow: true });
         }
       }, 500);
     } catch (err) {

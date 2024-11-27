@@ -50,7 +50,7 @@ const NewPassword = ({ data, goBack }) => {
       toast.success(res.message, {
         id: "success",
       });
-      router.push("/home", undefined, { shallow: true });
+      router.push("/", undefined, { shallow: true });
     }
   };
   const { mutate, isLoading } = useResetPassword(onSuccessHandler);

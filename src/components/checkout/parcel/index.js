@@ -335,7 +335,7 @@ const ParcelCheckout = () => {
             if (!token) {
               Router.push(
                 {
-                  pathname: "/home",
+                  pathname: "/",
                   query: { order_id: res?.order_id },
                 },
                 undefined,
@@ -361,7 +361,7 @@ const ParcelCheckout = () => {
             if (!token) {
               Router.push(
                 {
-                  pathname: "/home",
+                  pathname: "/",
                   query: { order_id: res?.order_id },
                 },
                 undefined,
@@ -424,7 +424,7 @@ const ParcelCheckout = () => {
                 if (!token) {
                   Router.push(
                     {
-                      pathname: "/home",
+                      pathname: "/",
                       query: { order_id: res?.order_id },
                     },
                     undefined,
@@ -451,7 +451,7 @@ const ParcelCheckout = () => {
               if (!token) {
                 Router.push(
                   {
-                    pathname: "/home",
+                    pathname: "/",
                     query: { order_id: res?.order_id },
                   },
                   undefined,

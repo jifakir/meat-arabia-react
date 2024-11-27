@@ -38,7 +38,7 @@ const Menu = ({ onClose, cartListRefetch }) => {
         onClose?.();
         toast.success(t(logoutSuccessFull));
 
-        router.push("/home");
+        router.push("/");
         setOpenModal(false);
 
         // dispatch(removeToken())

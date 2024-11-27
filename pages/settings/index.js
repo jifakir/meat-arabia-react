@@ -7,7 +7,7 @@ import UserLayout from "../../src/components/layout/UserLayout";
 import CustomSettings from "../../src/components/settings";
 import AuthGuard from "../../src/components/route-guard/AuthGuard";
 import { useRouter } from "next/router";
-import {getServerSideProps} from "../index";
+import {getServerSideProps} from "../__index";
 import SEO from "../../src/components/seo";
 
 const Index = ({ configData, landingPageData }) => {

@@ -11,9 +11,9 @@ const RedirectWhenCartEmpty = ({
 
   useEffect(() => {
     if (cartList?.length === 0 && page === "cart") {
-      router.push("/home");
+      router.push("/");
     } else if (campaignItemList?.length === 0 && page === "campaign") {
-      router.push("/home");
+      router.push("/");
     }
   }, [cartList, page, router, campaignItemList, buyNowItemList]);
 

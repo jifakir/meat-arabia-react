@@ -15,7 +15,7 @@ const AuthHeader = ({ title, configData }) => {
   const router = useRouter();
   const handleLogoClick = () => {
     if (router.pathname.includes("/auth")) {
-      router.push("/home", undefined, { shallow: true });
+      router.push("/", undefined, { shallow: true });
     }
   };
   return (

@@ -228,7 +228,7 @@ const SignIn = ({
       // }
 
       if (router.pathname === "/forgot-password") {
-        router.push("/home");
+        router.push("/");
       }
       handleClose();
     }
@@ -246,11 +246,11 @@ const SignIn = ({
         setOpenModuleSelection(true);
       } else {
         if (previousRouteName) {
-          router.push("/home");
+          router.push("/");
         } else if (previousRouteName === "/order") {
-          router.push("/home");
+          router.push("/");
         } else if (previousRouteName === "/forgot-password") {
-          router.push("/home");
+          router.push("/");
         } else {
           await router.back();
         }
@@ -261,7 +261,7 @@ const SignIn = ({
     if (item) {
       toast.success(t(moduleSelected));
       if (previousRouteName) {
-        router.push("/home");
+        router.push("/");
       } else {
         router.back();
       }
